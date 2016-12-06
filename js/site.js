@@ -13,6 +13,7 @@
       spotify_search_URL = 'https://api.spotify.com/v1/search?q='+ uName +'&type=artist&limit=1';
       console.log(uName);
       console.log(spotify_search_URL);
+      //function to get the user's search query for an artist's name
 
       $.get(
         spotify_search_URL, function(data) {
@@ -60,9 +61,7 @@
         $.get(
           artist_albums_URL, function(data) {
             console.log(artist_albums_URL);
-            $('#artist-genres').append(
-              '<li>' + artist_albums_URL + '</li>'
-            );
+
           }
 
         )};
