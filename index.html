@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title> Twitter API Testing </title>
+  <title> Spotify API Testing </title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no" />
   <link rel="stylesheet" media="screen" href="css/screen.css" />
@@ -10,23 +10,43 @@
 <body>
   <div id="page">
     <header>
-      <h1> Twitter API </h1>
+      <h1> Artist Bio </h1>
     </header>
     <main>
       <article id="primary">
         <p></p>
-        <a href="https://www.instagram.com/accounts/login/">Click to verify credentials</a>
+        <a href="https://www.instagram.com/accounts/login/">Sign in</a>
         <a href="https://api.instagram.com/oauth/authorize/?client_id=CLIENT-ID&redirect_uri=REDIRECT-URI&response_type=code">Authentication</a>
-
       </article>
-      <form id="tw-form" name="tw-formform" method="get" action="#null">
-        <label for="tw-username">Twitter Username: </label>
-        <input type="text" id="tw-username" name="tw-username"/>
-        <input type="submit" id="tw-submit" name="tw-submit" value="Search!"/>
+      <form id="sp-form" name="sp-formform" method="get" action="#null">
+        <label for="sp-username">Spotify Artist: </label>
+        <input type="text" id="sp-username" name="sp-username"/>
+        <input type="submit" id="sp-submit" name="sp-submit" value="Search!"/>
       </form>
     </main>
+    <article id="primary">
+      <p></p>
+    </article>
+    <article id="artist-image">
+      <figure id="image">
+        <img src="" alt=""/>
+
+      </figure>
+
+    </article>
+    <article id="followers">
+        <p id="number-of-followers">Number of followers on Spotify:</p>
+    </article>
+    <article id="popularity-rating">
+
+    </article>
+    <article id="associated-genres">
+      <p> Artist's Genres <p>
+        <ul id="artist-genres">
+        </ul>
+    </article>
   </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="js/site.js"></script>
 </body>
 </html>
