@@ -3,6 +3,7 @@
 //endpoints to access various data from the JSON located at the
 //various endpoints
 
+$.noConflict();
 (function($) {
   $(document).ready(
   function() {
