@@ -1,80 +1,93 @@
+//This javascript file contains various functions that serve
+//the purpose of utilizing a REST API, Spotify, and hit its
+//endpoints to access various data from the JSON located at the
+//various endpoints
+
 (function($) {
   $(document).ready(
   function() {
-    var uName, spotify_API_URL, spotify_client_ID, spotify_search_URL, spotify_client_secret;
-    var spotify_artist_albums, artist_ID, artist_bio, album_bio, searchQuery, artistQuery;
-    var num_followers, popularity_rating, genres, image_url, popularity_rating, associated_genres;
-    var artists_albums_function, artist_albums_URL, album_name_array, album_image_array, album_data_array;
+    //Declaring all members
+    var uName, spotifyAPIURL, spotifySearchURL;
+    var artistID, searchQuery, artistQuery;
+    var numFollowers, popularityRating, associatedGenres;
+    var artistsAlbumsFunction, artistAlbumsURL, albumNameArray, albumImageArray, albumDataArray;
+    var i, j, k;
+    var artistIMG;
 
-  $('#sp-form').on('submit', function(event) {
+    //firing up the event as the user hits the submit key
+    $('#sp-form').on('submit', function(event) {
       uName = $('#sp-username').val();
-      spotify_API_URL = 'https://api.spotify.com/v1/';
-      spotify_client_ID = '09c1185efbd44df3a3a7c566b1878f40';
-      spotify_client_secret = 'c1c16dda17f341e0a973f8c1b0fd6bea';
-      spotify_search_URL = 'https://api.spotify.com/v1/search?q='+ uName +'&type=artist&limit=1';
-      //console.log(uName);
-      //console.log(spotify_search_URL);
-      //function to get the user's search query for an artist's name
+      spotifyAPIURL = 'https://api.spotify.com/v1/';
+      //Hitting the spotify search API with the user's search query
+      spotifySearchURL = 'https://api.spotify.com/v1/search?q='+ uName +'&type=artist&limit=1';
 
-  $.when(
-    $.get(spotify_search_URL)
+      $.when(
+    $.get(spotifySearchURL)
   ).then(function(data) {
+    //storing data from API request in reference variable for later usage
     searchQuery = data;
-    //artist_ID = initialRequest.artists.items[0].id;
-    //artist_albums_URL = spotify_API_URL + 'artists/' + artist_ID + '/albums' ;
-    $.get(spotify_API_URL + 'artists/' + searchQuery.artists.items[0].id,
+    $.get(spotifyAPIURL + 'artists/' + searchQuery.artists.items[0].id,
       function(data) {
+        //initializing some members
         artistQuery = data;
-        artist_ID = searchQuery.artists.items[0].id;
-        num_followers = artistQuery.followers.total;
-        popularity_rating = artistQuery.popularity;
-        image_url = artistQuery.images[0].url;
-        associated_genres = artistQuery.genres;
-        artist_albums_URL = spotify_API_URL + 'artists/' + artist_ID + '/albums';
-        console.log(artist_ID);
+        artistID = searchQuery.artists.items[0].id;
+        numFollowers = artistQuery.followers.total;
+        popularityRating = artistQuery.popularity;
+        artistIMG = artistQuery.images[0].url;
+        associatedGenres = artistQuery.genres;
+        artistAlbumsURL = spotifyAPIURL + 'artists/' + artistID + '/albums';
+        console.log(artistID);
 
+        //Appending specified artist's follows an populatity
+        //info to index.html file
         $('#number-of-followers').append(
-          '  ' +  num_followers
+          '  ' +  numFollowers
         );
         $('#artist-popularity-rating').append(
-          '  ' + popularity_rating
+          '  ' + popularityRating
         );
 
         $('#image').append(
-          '<img src="' + image_url + '" alt=" '+ uName +'" />'
+          '<img id="image" src="' + artistIMG + '" alt=" '+ uName +'" />'
         );
 
-        for ( var i = 0; i < associated_genres.length; i++) {
-            $('#artist-genres').append(
-              '<li>' + associated_genres[i] + '</li>'
-            )};
-            artists_albums_function();
+        //for loop to append each listed genre to index file
+        for (i = 0; i < associatedGenres.length; i++) {
+          $('#artist-genres').append(
+              '<li>' + associatedGenres[i] + '</li>'
+            )}
+        //calling function
+        artistsAlbumsFunction();
 
-          });
-        event.preventDefault();
-        return null;
-      }).then(function() {
-        //album_data = data;
-        artists_albums_function();
       });
-      artists_albums_function = function() {
-        console.log(image_url);
+    event.preventDefault();
+    return null;
+  }).then(function() {
+        //album_data = data;
+    //artistsAlbumsFunction();
+  });
+
+      //function to attain artist's album information
+      artistsAlbumsFunction = function() {
+        console.log(popularityRating);
         $.get(
-          artist_albums_URL, function(data) {
-            album_data_array = data.items;
+          artistAlbumsURL, function(data) {
+            albumDataArray = data.items;
 
-            album_name_array = [];
-            album_image_array = [];
+            //initializing fields as arrays
+            albumNameArray = [];
+            albumImageArray = [];
 
-            for (var j = 0; j <= 5; j++) {
-              album_name_array.push(album_data_array[j].name);
-                $('#artist-five-albums').append(
-                '<li>' + album_name_array[j] + '</li>')
-            };
+            //for loop to append album name to index file
+            for (j = 0; j <= 5; j++) {
+              albumNameArray.push(albumDataArray[j].name);
+              $('#artist-five-albums').append(
+                '<li>' + albumNameArray[j] + '</li>')
+            }
 
-            for (var k = 0; k <6; k++) {
-              album_image_array.push(album_data_array[k].images[2].url)
-            };
+            for (k = 0; k <6; k++) {
+              albumImageArray.push(albumDataArray[k].images[2].url)
+            }
           });
       };
     });
