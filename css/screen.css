@@ -43,9 +43,7 @@ p {
   font-size: 1em;/* 18px/18px=1em */
   line-height: 1.222em; /*22px/18px= 1.222em */
 }
-header {
-  background: url(../images/spotify300.jpg) no-repeat top center;
-}
+
 ul {
   padding: 0.611;
   padding-bottom: 0.311em;/* half gridline */
@@ -89,6 +87,7 @@ img {
   margin-right: auto;
   display: block;
   margin: 1.5em;
+  padding: 1em;
 }
 .footer {
   padding: 1.012%;
